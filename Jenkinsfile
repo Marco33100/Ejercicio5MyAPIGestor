@@ -65,12 +65,16 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'mysql-ci',
-                    usernameVariable: 'DB_USER',
-                    passwordVariable: 'DB_PASSWORD'
-                )]) {
-                    sh 'mvn --batch-mode --no-transfer-progress clean verify -Dsurefire.useFile=false'
+                dir('.') {
+                    withCredentials([usernamePassword(
+                        credentialsId: 'mysql-ci',
+                        usernameVariable: 'DB_USER',
+                        passwordVariable: 'DB_PASSWORD'
+                    )]) {
+                        sh '''
+                            mvn --batch-mode --no-transfer-progress clean verify -Dsurefire.useFile=false
+                        '''
+                    }
                 }
             }
         }

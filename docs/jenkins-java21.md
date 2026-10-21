@@ -38,6 +38,8 @@ Requiere JDK con nombre `JDK21` y Maven con nombre `Maven3` (3.9.11), además de
 
 La etapa **Ver Directorio** muestra `pwd`, `ls -la` y el contenido de `pom.xml` en consola. **Build & Test** ejecuta `mvn --batch-mode --no-transfer-progress clean verify -Dsurefire.useFile=false`: compila, ejecuta las pruebas, genera el JAR y el reporte de JaCoCo. La opción de Surefire muestra el resultado de las pruebas en consola. El POM está en la raíz de este repositorio.
 
+El bloque **Build & Test** utiliza `steps { dir('.') { ... } }`. Dentro de `dir('.')` se conservan las credenciales MySQL y la ejecución `sh`. El punto selecciona el directorio de trabajo que contiene el POM.
+
 El pipeline descarga el proyecto, muestra las versiones de herramientas, ejecuta `mvn --batch-mode --no-transfer-progress clean verify`, publica los resultados JUnit y muestra el XML de JaCoCo mediante Coverage. No omite las pruebas. La ejecución #1 de `CompilarAPIJava21` terminó en `SUCCESS`: JDK 21.0.12.1, Maven 3.9.11, 42 pruebas aprobadas sin fallos, errores ni omisiones, y cobertura de líneas de 67.53 % (183/271) publicada correctamente por Coverage.
 
 ## Crear el entorno en otro equipo
