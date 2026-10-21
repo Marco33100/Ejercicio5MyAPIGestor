@@ -67,4 +67,8 @@ El historial conserva un primer commit con el POM anterior y un segundo commit c
 
 ## Jenkins
 
-Las herramientas configuradas son `JDK21` y `Maven3` (Maven 3.9.11). La conexión de este repositorio con un trabajo de Jenkins está pendiente. El trabajo deberá disponer de las variables de conexión a MySQL antes de ejecutar `mvn clean verify`. Si MySQL está en Windows y Jenkins en Docker Desktop, la dirección habitual para acceder al equipo anfitrión es `host.docker.internal`.
+El repositorio incluye un [Jenkinsfile](Jenkinsfile) para compilar con las herramientas `JDK21` y `Maven3` (Maven 3.9.11), ejecutar las pruebas existentes con MySQL y publicar los resultados y la cobertura.
+
+Utiliza la base `dbgestor_ci` en `mysql-java21-ci:3306` y obtiene el usuario y la contraseña de una credencial Jenkins con ID `mysql-ci`. Jenkins y MySQL deben compartir la red Docker `jenkins-java21-ci`.
+
+Consulta la [guía de configuración del trabajo, credenciales y MySQL](docs/jenkins-java21.md). La primera ejecución del trabajo `CompilarAPIJava21` está pendiente de comprobarse en Jenkins. Los resultados de pruebas indicados arriba corresponden a la verificación local.
