@@ -54,7 +54,7 @@ Para esta instalación con Docker Desktop, el script utiliza `http://host.docker
 
 ## Security Scan (SAST) - Semgrep
 
-La siguiente etapa ejecuta Semgrep **1.181.0** con `semgrep scan --config=auto`, guarda `reportes/semgrep.json` y lo publica como artefacto de la construcción. Los reportes están excluidos de Git. `--metrics=off` desactiva las métricas opcionales; `--config=auto` necesita conexión al registro de reglas de Semgrep.
+La siguiente etapa ejecuta Semgrep **1.181.0** con `semgrep scan --config=auto`, guarda `reportes/semgrep.json` y lo publica como artefacto de la construcción. Los reportes están excluidos de Git. La configuración automática necesita conexión al registro de reglas de Semgrep y utiliza las métricas predeterminadas: esta versión rechaza combinar `--config=auto` con `--metrics=off`. Consulta los [datos de métricas de Semgrep](https://docs.semgrep.dev/metrics).
 
 La imagen estándar de Jenkins no incluye Docker CLI ni acceso al motor Docker. Por eso se utiliza Semgrep instalado en un entorno virtual dentro de Jenkins, en lugar del `docker run` de la fotografía. El análisis se ejecuta sobre el mismo directorio que contiene el POM, usando `steps { dir('.') { sh ... } }`.
 
@@ -70,6 +70,8 @@ docker exec jenkins /var/jenkins_home/tools/semgrep-1.181.0/bin/semgrep --versio
 El entorno virtual se conserva en `jenkins_home`. Python se instala en el contenedor: si lo recreas, instala Python nuevamente o inclúyelo en una imagen propia de Jenkins. El agente que ejecute el trabajo debe tener disponible esa misma herramienta.
 
 `semgrep scan` genera el informe sin marcar la construcción como fallida únicamente por encontrar hallazgos; los errores de ejecución sí hacen fallar la etapa. Revisa el JSON publicado. La etapa Semgrep se ejecuta después de SonarQube, por lo que un error anterior impide llegar a ella.
+
+Se verificó el comando directamente dentro del contenedor Jenkins sobre una copia de la API: Semgrep 1.181.0 terminó con código de salida 0, analizó 29 archivos con 169 reglas y reportó 0 hallazgos. El JSON conserva una advertencia de análisis parcial en `mvnw`, el script de Maven Wrapper. Esta prueba directa no equivale a haber ejecutado el pipeline completo con SonarQube.
 
 Las ejecuciones exitosas de compilación documentadas arriba preceden a estas dos etapas. Una compilación aprobada por sí sola no demuestra que SonarQube o Semgrep hayan terminado correctamente. Después de actualizar el script pegado en Jenkins, vuelve a construir y revisa ambas etapas.
 

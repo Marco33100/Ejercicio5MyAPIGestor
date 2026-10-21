@@ -117,7 +117,6 @@ pipeline {
                         rm -f reportes/semgrep.json
                         "$JENKINS_HOME/tools/semgrep-1.181.0/bin/semgrep" scan \
                             --config=auto \
-                            --metrics=off \
                             --json \
                             --output=reportes/semgrep.json \
                             .
