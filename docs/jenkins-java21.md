@@ -39,7 +39,7 @@ Requiere JDK con nombre `JDK21` y Maven con nombre `Maven3` (3.9.11), además de
 7. Script Path: `Jenkinsfile`.
 8. Guarda, pulsa **Construir ahora** y revisa la consola.
 
-El pipeline descarga el proyecto, muestra las versiones de herramientas, ejecuta `mvn --batch-mode --no-transfer-progress clean verify`, publica los resultados JUnit y muestra el XML de JaCoCo mediante Coverage. No omite las pruebas. La compilación y el resultado de cobertura de este trabajo deben verificarse con su propia consola.
+El pipeline descarga el proyecto, muestra las versiones de herramientas, ejecuta `mvn --batch-mode --no-transfer-progress clean verify`, publica los resultados JUnit y muestra el XML de JaCoCo mediante Coverage. No omite las pruebas. La ejecución #1 de `CompilarAPIJava21` terminó en `SUCCESS`: JDK 21.0.12.1, Maven 3.9.11, 42 pruebas aprobadas sin fallos, errores ni omisiones, y cobertura de líneas de 67.53 % (183/271) publicada correctamente por Coverage.
 
 ## Crear el entorno en otro equipo
 
