@@ -71,4 +71,4 @@ El repositorio incluye un [Jenkinsfile](Jenkinsfile) para compilar con las herra
 
 Utiliza la base `dbgestor_ci` en `mysql-java21-ci:3306` y obtiene el usuario y la contraseña de una credencial Jenkins con ID `mysql-ci`. Jenkins y MySQL deben compartir la red Docker `jenkins-java21-ci`.
 
-Consulta la [guía de configuración del trabajo, credenciales y MySQL](docs/jenkins-java21.md). La primera ejecución del trabajo `CompilarAPIJava21` está pendiente de comprobarse en Jenkins. Los resultados de pruebas indicados arriba corresponden a la verificación local.
+Consulta la [guía de configuración del trabajo, credenciales y MySQL](docs/jenkins-java21.md). La ejecución #1 de `CompilarAPIJava21` terminó en `SUCCESS` con JDK 21.0.12.1 y Maven 3.9.11: 42 pruebas aprobadas, cero fallos y errores, y JAR generado. JUnit publicó los resultados y Coverage procesó el reporte de JaCoCo: 183 de 271 líneas cubiertas (67.53 %). Esta ejecución en Jenkins es adicional a la verificación local indicada arriba.
