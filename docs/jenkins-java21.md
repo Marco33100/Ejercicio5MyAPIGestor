@@ -31,13 +31,12 @@ El ID debe coincidir exactamente con `mysql-ci`. El pipeline utiliza Credentials
 Requiere JDK con nombre `JDK21` y Maven con nombre `Maven3` (3.9.11), además de los complementos Git, Pipeline, Credentials Binding, JUnit y Coverage.
 
 1. Crea una **Nueva tarea** de tipo **Pipeline** llamada `CompilarAPIJava21`.
-2. En Definition selecciona **Pipeline script from SCM**.
-3. Selecciona SCM **Git**.
-4. Repository URL: `https://github.com/Marco33100/Ejercicio5MyAPIGestor.git`.
-5. Credentials del repositorio: ninguna, porque es público. La credencial `mysql-ci` se utiliza para la base durante las pruebas.
-6. Branch Specifier: `*/main`.
-7. Script Path: `Jenkinsfile`.
-8. Guarda, pulsa **Construir ahora** y revisa la consola.
+2. En Definition selecciona **Pipeline script**, como solicita la práctica.
+3. Copia todo el contenido del [Jenkinsfile](../Jenkinsfile) y pégalo en el campo Script.
+4. Mantén activada la opción **Use Groovy Sandbox**. El script contiene la URL del repositorio y la rama `main`. La credencial `mysql-ci` se utiliza para la base durante las pruebas.
+5. Guarda, pulsa **Construir ahora** y revisa la consola.
+
+La etapa **Ver Directorio** muestra `pwd`, `ls -la` y el contenido de `pom.xml` en consola. **Build & Test** ejecuta `mvn --batch-mode --no-transfer-progress clean verify -Dsurefire.useFile=false`: compila, ejecuta las pruebas, genera el JAR y el reporte de JaCoCo. La opción de Surefire muestra el resultado de las pruebas en consola. El POM está en la raíz de este repositorio.
 
 El pipeline descarga el proyecto, muestra las versiones de herramientas, ejecuta `mvn --batch-mode --no-transfer-progress clean verify`, publica los resultados JUnit y muestra el XML de JaCoCo mediante Coverage. No omite las pruebas. La ejecución #1 de `CompilarAPIJava21` terminó en `SUCCESS`: JDK 21.0.12.1, Maven 3.9.11, 42 pruebas aprobadas sin fallos, errores ni omisiones, y cobertura de líneas de 67.53 % (183/271) publicada correctamente por Coverage.
 
