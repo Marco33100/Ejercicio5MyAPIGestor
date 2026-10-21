@@ -44,6 +44,8 @@ El pipeline descarga el proyecto, muestra las versiones de herramientas, ejecuta
 
 ## SonarQube Analysis
 
+La suite actual incorpora diez pruebas HTTP adicionales: 52 pruebas aprobadas y 99.26 % de cobertura de líneas en la verificación directa dentro de Jenkins. La ejecución #1 documentada arriba conserva el resultado anterior de 42 pruebas y 67.53 %. Vuelve a construir el trabajo para importar la nueva cobertura en SonarQube; consulta el [detalle de cobertura](cobertura-api.md).
+
 Después de compilar y publicar la cobertura, el pipeline ejecuta Sonar Maven Plugin **5.5.0.6356**. El proyecto se identifica como `Ejercicio5MyAPIGestor` y recibe el XML `target/site/jacoco/jacoco.xml` generado por `clean verify`.
 
 En **Administrar Jenkins > System > SonarQube servers**, configura una instalación con nombre exacto **SonarServer**. Guarda un token válido de SonarQube como credencial de tipo **Secret text** y selecciónalo en esa instalación. No escribas el token en el script ni en el repositorio.
