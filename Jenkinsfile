@@ -126,7 +126,9 @@ pipeline {
             }
             post {
                 always {
-                    archiveArtifacts artifacts: 'reportes/semgrep.json', allowEmptyArchive: true
+                    archiveArtifacts artifacts: 'reportes/semgrep.json',
+                        allowEmptyArchive: true,
+                        fingerprint: true
                 }
             }
         }
