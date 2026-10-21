@@ -1,4 +1,5 @@
 target/
+reportes/
 .mvn/wrapper/maven-wrapper.jar
 .maven-cache/
 .env

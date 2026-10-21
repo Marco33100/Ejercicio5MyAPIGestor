@@ -71,10 +71,10 @@ El historial conserva un primer commit con el POM anterior y un segundo commit c
 
 ## Jenkins
 
-El repositorio incluye un [Jenkinsfile](Jenkinsfile) para compilar con las herramientas `JDK21` y `Maven3` (Maven 3.9.11), ejecutar las pruebas existentes con MySQL y publicar los resultados y la cobertura.
+El repositorio incluye un [Jenkinsfile](Jenkinsfile) para compilar con las herramientas `JDK21` y `Maven3` (Maven 3.9.11), ejecutar las pruebas existentes con MySQL, publicar los resultados y la cobertura, analizar el proyecto con SonarQube y generar un reporte SAST con Semgrep.
 
 Utiliza la base `dbgestor_ci` en `mysql-java21-ci:3306` y obtiene el usuario y la contraseña de una credencial Jenkins con ID `mysql-ci`. Jenkins y MySQL deben compartir la red Docker `jenkins-java21-ci`.
 
 Consulta la [guía de configuración del trabajo, credenciales y MySQL](docs/jenkins-java21.md). La ejecución #1 de `CompilarAPIJava21` terminó en `SUCCESS` con JDK 21.0.12.1 y Maven 3.9.11: 42 pruebas aprobadas, cero fallos y errores, y JAR generado. JUnit publicó los resultados y Coverage procesó el reporte de JaCoCo: 183 de 271 líneas cubiertas (67.53 %). Esta ejecución en Jenkins es adicional a la verificación local indicada arriba.
 
-La ejecución #1 es anterior a la incorporación de Sonar y la declaración explícita de Surefire. Vuelve a construir el trabajo para comprobar el commit actualizado desde Jenkins.
+La ejecución #1 es anterior a la incorporación de Sonar y la declaración explícita de Surefire. Las nuevas etapas requieren el servidor Jenkins `SonarServer` con su token y Semgrep 1.181.0 instalado en el agente. Consulta los requisitos en la guía anterior. Copia el Jenkinsfile completo en **Pipeline script** y vuelve a construir el trabajo para comprobar el pipeline actualizado.

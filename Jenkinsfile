@@ -89,6 +89,47 @@ pipeline {
                 )
             }
         }
+
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarServer') {
+                    dir('.') {
+                        sh '''
+                            set +x
+                            SONAR_TOKEN="$SONAR_AUTH_TOKEN" \
+                            mvn --batch-mode --no-transfer-progress \
+                                org.sonarsource.scanner.maven:sonar-maven-plugin:5.5.0.6356:sonar \
+                                -Dsonar.projectKey=Ejercicio5MyAPIGestor \
+                                -Dsonar.projectName=Ejercicio5MyAPIGestor \
+                                -Dsonar.host.url=http://host.docker.internal:9000 \
+                                -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Security Scan (SAST) - Semgrep') {
+            steps {
+                dir('.') {
+                    sh '''
+                        mkdir -p reportes
+                        rm -f reportes/semgrep.json
+                        "$JENKINS_HOME/tools/semgrep-1.181.0/bin/semgrep" scan \
+                            --config=auto \
+                            --metrics=off \
+                            --json \
+                            --output=reportes/semgrep.json \
+                            .
+                    '''
+                }
+            }
+            post {
+                always {
+                    archiveArtifacts artifacts: 'reportes/semgrep.json', allowEmptyArchive: true
+                }
+            }
+        }
     }
 
     post {
