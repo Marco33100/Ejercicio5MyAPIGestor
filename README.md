@@ -55,6 +55,10 @@ El plugin Maven de JaCoCo 0.8.15 ya estaba configurado. `clean verify` genera:
 
 La suite verificada cubrió 183 de 271 líneas, equivalentes al 67.53 %. Coverage de Jenkins puede publicar el XML una vez configurado el trabajo.
 
+El POM ahora declara explícitamente Sonar Maven Plugin **5.5.0.6356** y Surefire **3.5.4**, además del JaCoCo **0.8.15** existente. Antes, Surefire se utilizaba con la versión 2.22.2 heredada de Spring Boot.
+
+El análisis SonarQube requiere configurar el servidor y su token y ejecutar `mvn sonar:sonar`. Declarar el plugin en el POM no ejecuta ese análisis automáticamente. Consulta el [detalle de los cambios](docs/actualizacion-java21.md).
+
 ## Actualización a Java 21
 
 El POM pasó de Java 11 a Java 21. Se conservaron Spring Boot 2.7.17, Maven Wrapper y las dependencias existentes. Se verificaron además el arranque del ejecutable y el registro y acceso de un usuario desde el cliente.
@@ -72,3 +76,5 @@ El repositorio incluye un [Jenkinsfile](Jenkinsfile) para compilar con las herra
 Utiliza la base `dbgestor_ci` en `mysql-java21-ci:3306` y obtiene el usuario y la contraseña de una credencial Jenkins con ID `mysql-ci`. Jenkins y MySQL deben compartir la red Docker `jenkins-java21-ci`.
 
 Consulta la [guía de configuración del trabajo, credenciales y MySQL](docs/jenkins-java21.md). La ejecución #1 de `CompilarAPIJava21` terminó en `SUCCESS` con JDK 21.0.12.1 y Maven 3.9.11: 42 pruebas aprobadas, cero fallos y errores, y JAR generado. JUnit publicó los resultados y Coverage procesó el reporte de JaCoCo: 183 de 271 líneas cubiertas (67.53 %). Esta ejecución en Jenkins es adicional a la verificación local indicada arriba.
+
+La ejecución #1 es anterior a la incorporación de Sonar y la declaración explícita de Surefire. Vuelve a construir el trabajo para comprobar el commit actualizado desde Jenkins.
