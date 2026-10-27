@@ -1,5 +1,7 @@
 # Cobertura de la API superior al 80 %
 
+Este documento conserva la medicion anterior de 52 pruebas. La [medicion actual](cobertura-100.md) tiene 58 pruebas y 100 % de cobertura de metodos, lineas y ramas.
+
 Se agregaron diez pruebas HTTP en `ContratoJsonApiTest`, ademas de las 42 pruebas existentes. Usan MockMvc con los controladores reales y repositorios simulados para comprobar el contrato JSON que consume el cliente.
 
 Para proyectos, tareas, asignaciones, comentarios y usuarios se verifica que las actualizaciones entreguen al repositorio todos los datos recibidos. Tambien se comprueba que las consultas por identificador usen el parametro HTTP correcto y devuelvan los campos esperados. La prueba del perfil de usuario no exige devolver la contrasena en la respuesta.

@@ -46,14 +46,14 @@ En Linux o macOS utiliza `./mvnw` en lugar de `.\mvnw.cmd` y configura las misma
 
 ## Pruebas y cobertura
 
-La compilación más reciente con JDK 21 y Maven 3.9.11 terminó en `BUILD SUCCESS`: **52 pruebas aprobadas**, sin fallos, errores ni pruebas omitidas. Se utilizó la base MySQL 8.4 de pruebas para la verificación.
+La compilación más reciente con JDK 21 y Maven 3.9.11 terminó en `BUILD SUCCESS`: **58 pruebas aprobadas**, sin fallos, errores ni pruebas omitidas. Se utilizó la base MySQL 8.4 de pruebas para la verificación.
 
 El plugin Maven de JaCoCo 0.8.15 ya estaba configurado. `clean verify` genera:
 
 - Reporte HTML: `target/site/jacoco/index.html`.
 - Reporte XML: `target/site/jacoco/jacoco.xml`.
 
-Se agregaron diez pruebas HTTP del contrato JSON de la API. La suite verificada ahora cubre **269 de 271 líneas (99.26 %)**, frente al 67.53 % anterior. La cobertura combinada calculada con líneas y condiciones es **94.57 %**; debe confirmarse en SonarQube al volver a ejecutar el trabajo de Jenkins. La cobertura de ramas por separado permanece en 64.29 %. Consulta el [detalle de las pruebas y las métricas](docs/cobertura-api.md). Coverage de Jenkins publica el XML generado por JaCoCo.
+La suite verificada ahora cubre **271/271 lineas, 103/103 metodos y 42/42 ramas: 100 %** en las tres metricas. Se corrigieron las comprobaciones de nulos de los cinco controladores y se agregaron pruebas de entradas nulas y del arranque real de `main`, ademas de las pruebas HTTP existentes. No se excluyeron clases ni metodos. Consulta la [verificacion actual al 100 %](docs/cobertura-100.md) y el [resultado anterior](docs/cobertura-api.md). Coverage de Jenkins publica el XML generado por JaCoCo; vuelve a construir **CompilarAPIJava21** para actualizar tambien SonarQube.
 
 El POM ahora declara explícitamente Sonar Maven Plugin **5.5.0.6356** y Surefire **3.5.4**, además del JaCoCo **0.8.15** existente. Antes, Surefire se utilizaba con la versión 2.22.2 heredada de Spring Boot.
 
