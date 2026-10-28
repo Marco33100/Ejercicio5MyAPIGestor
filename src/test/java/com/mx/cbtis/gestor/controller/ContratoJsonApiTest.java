@@ -156,6 +156,8 @@ class ContratoJsonApiTest {
 
     @Test
     void actualizarUsuarioConservaLosDatosDelPerfil() throws Exception {
+        when(usuarios.findById(45)).thenReturn(Optional.of(new Usuario(45, "Anterior", "anterior@example.test",
+                "anterior", "estudiante", "anterior.png")));
         comprobarActualizacion("/updateUsuario", USUARIO_JSON, usuarios, Usuario.class);
     }
 

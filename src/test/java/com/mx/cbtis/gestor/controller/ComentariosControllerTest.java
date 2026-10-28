@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.refEq;
+import static com.mx.cbtis.gestor.controller.SolicitudesTest.convertir;
+import com.mx.cbtis.gestor.dto.*;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -41,7 +44,7 @@ class ComentariosControllerTest {
 		comentario.setId_tarea(30);
 		when(comentariostable.findByTarea(30)).thenReturn(Collections.singletonList(comentario));
 
-		List<Comentarios> resultado = controller.getComentario(filtro);
+		List<Comentarios> resultado = controller.getComentario(convertir(filtro, TareasId.class));
 
 		assertEquals(1, resultado.size());
 		assertSame(comentario, resultado.get(0));
@@ -55,7 +58,7 @@ class ComentariosControllerTest {
 		filtro.setId_tarea(30);
 		when(comentariostable.findByTarea(30)).thenReturn(Collections.emptyList());
 
-		List<Comentarios> resultado = controller.getComentario(filtro);
+		List<Comentarios> resultado = controller.getComentario(convertir(filtro, TareasId.class));
 
 		assertTrue(resultado.isEmpty());
 		verify(comentariostable).findByTarea(30);
@@ -91,10 +94,10 @@ class ComentariosControllerTest {
 		Comentarios comentario = new Comentarios();
 		comentario.setTexto_comentario("Comentario nuevo");
 
-		int resultado = controller.addComentario(comentario);
+		int resultado = controller.addComentario(convertir(comentario, ComentariosSolicitud.class));
 
 		assertEquals(1, resultado);
-		verify(comentariostable).save(comentario);
+		verify(comentariostable).save(refEq(comentario));
 	}
 
 	@Test
@@ -104,10 +107,10 @@ class ComentariosControllerTest {
 		comentario.setId_comentario(5);
 		comentario.setTexto_comentario("Comentario actualizado");
 
-		int resultado = controller.updateComentario(comentario);
+		int resultado = controller.updateComentario(convertir(comentario, ComentariosSolicitud.class));
 
 		assertEquals(1, resultado);
-		verify(comentariostable).save(comentario);
+		verify(comentariostable).save(refEq(comentario));
 	}
 
 	@Test
@@ -116,10 +119,10 @@ class ComentariosControllerTest {
 		Comentarios comentario = new Comentarios();
 		comentario.setId_comentario(5);
 
-		int resultado = controller.deleteComentario(comentario);
+		int resultado = controller.deleteComentario(convertir(comentario, ComentariosId.class));
 
 		assertEquals(1, resultado);
-		verify(comentariostable).delete(comentario);
+		verify(comentariostable).deleteById(comentario.getId_comentario());
 	}
 
 	@Test

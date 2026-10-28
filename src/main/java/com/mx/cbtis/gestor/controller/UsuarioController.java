@@ -1,10 +1,13 @@
 package com.mx.cbtis.gestor.controller;
 
+import com.mx.cbtis.gestor.dto.UsuarioSolicitud;
+import com.mx.cbtis.gestor.dto.UsuarioId;
+import com.mx.cbtis.gestor.dto.LoginSolicitud;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,15 +21,18 @@ import com.mx.cbtis.gestor.repository.UsuarioRepository;
 @RestController
 public class UsuarioController {
 	
-	@Autowired
-	UsuarioRepository usuariotable;
+	private final UsuarioRepository usuariotable;
+
+	public UsuarioController(UsuarioRepository usuariotable) {
+		this.usuariotable = usuariotable;
+	}
 	
 	@PostMapping("/getUsuarioLogin")
-	public Usuario getUsuarioLogin(@RequestBody Usuario userParam) {
+	public Usuario getUsuarioLogin(@RequestBody LoginSolicitud userParam) {
 		
 		Optional<Usuario> optionaluser = usuariotable.findByCorreoPass(
-				userParam.getCorreo_electronico(),
-				userParam.getContrasena());
+				userParam.correoElectronico(),
+				userParam.contrasena());
 		
 		Usuario user = new Usuario();
 		
@@ -53,10 +59,10 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/addUsuario")
-	public int addUsuario(@RequestBody Usuario usuario) {
+	public int addUsuario(@RequestBody UsuarioSolicitud usuario) {
 		int flag = 0;
 		if (usuario != null) {
-			usuariotable.save(usuario);
+			usuariotable.save(new Usuario(null, usuario.nombre(), usuario.correoElectronico(), usuario.contrasena(), "Estudiante", usuario.imagenUsuario()));
 			flag = 1;
 		}
 		
@@ -64,10 +70,15 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/updateUsuario")
-	public int updateUsuario(@RequestBody Usuario usuario) {
+	public int updateUsuario(@RequestBody UsuarioSolicitud usuario) {
 		int flag = 0;
 		if (usuario != null) {
-			usuariotable.save(usuario);
+			Optional<Usuario> encontrado = usuariotable.findById(usuario.idUsuario());
+            if (encontrado.isEmpty()) {
+                return 0;
+            }
+            Usuario existente = encontrado.get();
+            usuariotable.save(new Usuario(usuario.idUsuario(), usuario.nombre(), usuario.correoElectronico(), usuario.contrasena(), existente.getRol(), usuario.imagenUsuario()));
 			flag = 1;
 		}
 		
@@ -75,10 +86,10 @@ public class UsuarioController {
 	}
 	
 	@DeleteMapping("/deleteUsuario")
-	public int deleteUsuario(@RequestBody Usuario usuario) {
+	public int deleteUsuario(@RequestBody UsuarioId usuario) {
 		int flag = 0;
 		if (usuario != null) {
-			usuariotable.delete(usuario);
+			usuariotable.deleteById(usuario.idUsuario());
 			flag = 1;
 		}
 		

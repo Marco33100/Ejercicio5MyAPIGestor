@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.refEq;
+import static com.mx.cbtis.gestor.controller.SolicitudesTest.convertir;
+import com.mx.cbtis.gestor.dto.*;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -62,10 +65,10 @@ class AsignacionesControllerTest {
 		asignacion.setId_usuario(4);
 		asignacion.setId_tarea(3);
 
-		int resultado = controller.addAsignacion(asignacion);
+		int resultado = controller.addAsignacion(convertir(asignacion, AsignacionesSolicitud.class));
 
 		assertEquals(1, resultado);
-		verify(asignacionestable).save(asignacion);
+		verify(asignacionestable).save(refEq(asignacion));
 	}
 
 	@Test
@@ -76,10 +79,10 @@ class AsignacionesControllerTest {
 		asignacion.setId_usuario(4);
 		asignacion.setId_tarea(3);
 
-		int resultado = controller.updateAsignacion(asignacion);
+		int resultado = controller.updateAsignacion(convertir(asignacion, AsignacionesSolicitud.class));
 
 		assertEquals(1, resultado);
-		verify(asignacionestable).save(asignacion);
+		verify(asignacionestable).save(refEq(asignacion));
 	}
 
 	@Test
@@ -88,10 +91,10 @@ class AsignacionesControllerTest {
 		Asignaciones asignacion = new Asignaciones();
 		asignacion.setId_asignacion(8);
 
-		int resultado = controller.deleteAsignacion(asignacion);
+		int resultado = controller.deleteAsignacion(convertir(asignacion, AsignacionesId.class));
 
 		assertEquals(1, resultado);
-		verify(asignacionestable).delete(asignacion);
+		verify(asignacionestable).deleteById(asignacion.getId_asignacion());
 	}
 
 	@Test

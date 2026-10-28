@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.refEq;
+import static com.mx.cbtis.gestor.controller.SolicitudesTest.convertir;
+import com.mx.cbtis.gestor.dto.*;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -41,7 +44,7 @@ class TareasControllerTest {
 		tarea.setId_proyecto(20);
 		when(tareastable.findByIdProyecto(20)).thenReturn(Collections.singletonList(tarea));
 
-		List<Tareas> resultado = controller.getTarea(filtro);
+		List<Tareas> resultado = controller.getTarea(convertir(filtro, ProyectosId.class));
 
 		assertEquals(1, resultado.size());
 		assertSame(tarea, resultado.get(0));
@@ -55,7 +58,7 @@ class TareasControllerTest {
 		filtro.setId_proyecto(20);
 		when(tareastable.findByIdProyecto(20)).thenReturn(Collections.emptyList());
 
-		List<Tareas> resultado = controller.getTarea(filtro);
+		List<Tareas> resultado = controller.getTarea(convertir(filtro, ProyectosId.class));
 
 		assertTrue(resultado.isEmpty());
 		verify(tareastable).findByIdProyecto(20);
@@ -91,10 +94,10 @@ class TareasControllerTest {
 		Tareas tarea = new Tareas();
 		tarea.setNombre("Tarea nueva");
 
-		int resultado = controller.addTareas(tarea);
+		int resultado = controller.addTareas(convertir(tarea, TareasSolicitud.class));
 
 		assertEquals(1, resultado);
-		verify(tareastable).save(tarea);
+		verify(tareastable).save(refEq(tarea));
 	}
 
 	@Test
@@ -104,10 +107,10 @@ class TareasControllerTest {
 		tarea.setId_tarea(3);
 		tarea.setNombre("Tarea actualizada");
 
-		int resultado = controller.updateTareas(tarea);
+		int resultado = controller.updateTareas(convertir(tarea, TareasSolicitud.class));
 
 		assertEquals(1, resultado);
-		verify(tareastable).save(tarea);
+		verify(tareastable).save(refEq(tarea));
 	}
 
 	@Test
@@ -116,10 +119,10 @@ class TareasControllerTest {
 		Tareas tarea = new Tareas();
 		tarea.setId_tarea(3);
 
-		int resultado = controller.deleteTareas(tarea);
+		int resultado = controller.deleteTareas(convertir(tarea, TareasId.class));
 
 		assertEquals(1, resultado);
-		verify(tareastable).delete(tarea);
+		verify(tareastable).deleteById(tarea.getId_tarea());
 	}
 
 	@Test

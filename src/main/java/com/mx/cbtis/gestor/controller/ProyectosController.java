@@ -1,10 +1,12 @@
 package com.mx.cbtis.gestor.controller;
 
+import com.mx.cbtis.gestor.dto.ProyectosSolicitud;
+import com.mx.cbtis.gestor.dto.ProyectosId;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,20 +20,12 @@ import com.mx.cbtis.gestor.repository.ProtectosRepository;
 @RestController
 public class ProyectosController {
 	
-	@Autowired 
-	ProtectosRepository proyectostable;
+	private final ProtectosRepository proyectostable;
+
+	public ProyectosController(ProtectosRepository proyectostable) {
+		this.proyectostable = proyectostable;
+	}
 	
-	/*@PostMapping("/buscarProyecto")
-	public Proyectos getProyecto(@RequestBody Proyectos proyecto) {
-		
-		Proyectos buscar = new Proyectos();
-		Optional<Proyectos> proyectos = proyectostable.findById(proyecto.getId_proyecto());
-		if(proyectos.isPresent()) {
-			buscar = proyectos.get();
-		}
-		
-		return buscar;
-	}*/
 	
 	@GetMapping("/buscarProyecto")
 	public Proyectos getProyecto(@RequestParam int id_proyecto) {
@@ -46,12 +40,12 @@ public class ProyectosController {
 	}
 	
 	@PostMapping("/addProyecto")
-	public int addProyecto(@RequestBody Proyectos proyecto) {
+	public int addProyecto(@RequestBody ProyectosSolicitud proyecto) {
 		
 		int flag = 0;
 		if (proyecto != null) {
 			
-			proyectostable.save(proyecto);
+			proyectostable.save(new Proyectos(null, proyecto.nombre(), proyecto.descripcion(), proyecto.fechaInicio(), proyecto.fechaFinalizacion(), proyecto.estadoProyecto(), proyecto.fondo()));
 			flag = 1;
 		}
 		
@@ -59,11 +53,11 @@ public class ProyectosController {
 	}
 	
 	@PostMapping("/updateProyecto")
-	public int updateProyecto(@RequestBody Proyectos proyecto) {
+	public int updateProyecto(@RequestBody ProyectosSolicitud proyecto) {
 		
 		int flag = 0;
 		if (proyecto != null) {
-			proyectostable.save(proyecto);
+			proyectostable.save(new Proyectos(proyecto.idProyecto(), proyecto.nombre(), proyecto.descripcion(), proyecto.fechaInicio(), proyecto.fechaFinalizacion(), proyecto.estadoProyecto(), proyecto.fondo()));
 			flag = 1;
 		}
 		
@@ -71,11 +65,11 @@ public class ProyectosController {
 	}
 	
 	@DeleteMapping("/deleteProyecto")
-	public int deleteProyecto(@RequestBody Proyectos proyecto) {
+	public int deleteProyecto(@RequestBody ProyectosId proyecto) {
 		
 		int flag = 0;
 		if (proyecto != null) {
-			proyectostable.delete(proyecto);
+			proyectostable.deleteById(proyecto.idProyecto());
 			flag = 1;
 		}
 		

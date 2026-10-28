@@ -1,10 +1,13 @@
 package com.mx.cbtis.gestor.controller;
 
+import com.mx.cbtis.gestor.dto.TareasSolicitud;
+import com.mx.cbtis.gestor.dto.TareasId;
+import com.mx.cbtis.gestor.dto.ProyectosId;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,18 +16,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mx.cbtis.gestor.modelo.Tareas;
-import com.mx.cbtis.gestor.modelo.Usuario;
 import com.mx.cbtis.gestor.repository.TareasRepository;
 
 @RestController
 public class TareasController {
 	
-	@Autowired
-	TareasRepository tareastable;
+	private final TareasRepository tareastable;
+
+	public TareasController(TareasRepository tareastable) {
+		this.tareastable = tareastable;
+	}
 	
 	@PostMapping("/getTarea")
-	public List<Tareas> getTarea(@RequestBody Tareas id_proyecto) {
-		List<Tareas> listaTareas = tareastable.findByIdProyecto(id_proyecto.getId_proyecto());
+	public List<Tareas> getTarea(@RequestBody ProyectosId id_proyecto) {
+		List<Tareas> listaTareas = tareastable.findByIdProyecto(id_proyecto.idProyecto());
 		return listaTareas;
 	}
 	
@@ -41,11 +46,11 @@ public class TareasController {
 	}
 	
 	@PostMapping("/addTareas")
-	public int addTareas(@RequestBody Tareas tareas) {
+	public int addTareas(@RequestBody TareasSolicitud tareas) {
 		
 		int flag = 0;
 		if (tareas != null) {
-			tareastable.save(tareas);
+			tareastable.save(new Tareas(null, tareas.nombre(), tareas.descripcion(), tareas.fechaVencimiento(), tareas.lista(), tareas.estado(), tareas.idProyecto()));
 			flag = 1;
 		}
 		
@@ -53,11 +58,11 @@ public class TareasController {
 	}
 	
 	@PostMapping("/updateTareas")
-	public int updateTareas(@RequestBody Tareas tareas) {
+	public int updateTareas(@RequestBody TareasSolicitud tareas) {
 		
 		int flag = 0;
 		if (tareas != null) {
-			tareastable.save(tareas);
+			tareastable.save(new Tareas(tareas.idTarea(), tareas.nombre(), tareas.descripcion(), tareas.fechaVencimiento(), tareas.lista(), tareas.estado(), tareas.idProyecto()));
 			flag = 1;
 		}
 		
@@ -65,11 +70,11 @@ public class TareasController {
 	}
 	
 	@DeleteMapping("/deleteTareas")
-	public int deleteTareas(@RequestBody Tareas tareas) {
+	public int deleteTareas(@RequestBody TareasId tareas) {
 		
 		int flag = 0;
 		if (tareas != null) {
-			tareastable.delete(tareas);
+			tareastable.deleteById(tareas.idTarea());
 			flag = 1;
 		}
 		

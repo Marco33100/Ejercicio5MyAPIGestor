@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.refEq;
+import static com.mx.cbtis.gestor.controller.SolicitudesTest.convertir;
+import com.mx.cbtis.gestor.dto.*;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -61,10 +64,10 @@ class ProyectosControllerTest {
 		Proyectos proyecto = new Proyectos();
 		proyecto.setNombre("Proyecto nuevo");
 
-		int resultado = controller.addProyecto(proyecto);
+		int resultado = controller.addProyecto(convertir(proyecto, ProyectosSolicitud.class));
 
 		assertEquals(1, resultado);
-		verify(proyectostable).save(proyecto);
+		verify(proyectostable).save(refEq(proyecto));
 	}
 
 	@Test
@@ -74,10 +77,10 @@ class ProyectosControllerTest {
 		proyecto.setId_proyecto(12);
 		proyecto.setNombre("Proyecto actualizado");
 
-		int resultado = controller.updateProyecto(proyecto);
+		int resultado = controller.updateProyecto(convertir(proyecto, ProyectosSolicitud.class));
 
 		assertEquals(1, resultado);
-		verify(proyectostable).save(proyecto);
+		verify(proyectostable).save(refEq(proyecto));
 	}
 
 	@Test
@@ -86,10 +89,10 @@ class ProyectosControllerTest {
 		Proyectos proyecto = new Proyectos();
 		proyecto.setId_proyecto(12);
 
-		int resultado = controller.deleteProyecto(proyecto);
+		int resultado = controller.deleteProyecto(convertir(proyecto, ProyectosId.class));
 
 		assertEquals(1, resultado);
-		verify(proyectostable).delete(proyecto);
+		verify(proyectostable).deleteById(proyecto.getId_proyecto());
 	}
 
 	@Test

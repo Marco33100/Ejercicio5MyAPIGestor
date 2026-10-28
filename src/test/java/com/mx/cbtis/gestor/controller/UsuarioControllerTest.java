@@ -5,6 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.refEq;
+import static com.mx.cbtis.gestor.controller.SolicitudesTest.convertir;
+import com.mx.cbtis.gestor.dto.*;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -49,7 +52,7 @@ class UsuarioControllerTest {
 		when(usuariotable.findByCorreoPass(correo, contrasena))
 				.thenReturn(Optional.of(usuarioEncontrado));
 
-		Usuario resultado = controller.getUsuarioLogin(datosLogin);
+		Usuario resultado = controller.getUsuarioLogin(convertir(datosLogin, LoginSolicitud.class));
 
 		assertSame(usuarioEncontrado, resultado);
 		verify(usuariotable).findByCorreoPass(correo, contrasena);
@@ -65,7 +68,7 @@ class UsuarioControllerTest {
 		datosLogin.setContrasena(contrasena);
 		when(usuariotable.findByCorreoPass(correo, contrasena)).thenReturn(Optional.empty());
 
-		Usuario resultado = controller.getUsuarioLogin(datosLogin);
+		Usuario resultado = controller.getUsuarioLogin(convertir(datosLogin, LoginSolicitud.class));
 
 		assertEquals("000", resultado.getNombre());
 		verify(usuariotable).findByCorreoPass(correo, contrasena);
@@ -100,11 +103,12 @@ class UsuarioControllerTest {
 	void agregarUsuarioGuardaYDevuelveUno() {
 		Usuario usuario = new Usuario();
 		usuario.setNombre("Ana");
+		usuario.setRol("Estudiante");
 
-		int resultado = controller.addUsuario(usuario);
+		int resultado = controller.addUsuario(convertir(usuario, UsuarioSolicitud.class));
 
 		assertEquals(1, resultado);
-		verify(usuariotable).save(usuario);
+		verify(usuariotable).save(refEq(usuario));
 	}
 
 	@Test
@@ -113,11 +117,12 @@ class UsuarioControllerTest {
 		Usuario usuario = new Usuario();
 		usuario.setId_usuario(7);
 		usuario.setNombre("Ana actualizada");
+		when(usuariotable.findById(7)).thenReturn(Optional.of(usuario));
 
-		int resultado = controller.updateUsuario(usuario);
+		int resultado = controller.updateUsuario(convertir(usuario, UsuarioSolicitud.class));
 
 		assertEquals(1, resultado);
-		verify(usuariotable).save(usuario);
+		verify(usuariotable).save(refEq(usuario));
 	}
 
 	@Test
@@ -126,10 +131,10 @@ class UsuarioControllerTest {
 		Usuario usuario = new Usuario();
 		usuario.setId_usuario(7);
 
-		int resultado = controller.deleteUsuario(usuario);
+		int resultado = controller.deleteUsuario(convertir(usuario, UsuarioId.class));
 
 		assertEquals(1, resultado);
-		verify(usuariotable).delete(usuario);
+		verify(usuariotable).deleteById(usuario.getId_usuario());
 	}
 
 	@Test

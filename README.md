@@ -46,14 +46,14 @@ En Linux o macOS utiliza `./mvnw` en lugar de `.\mvnw.cmd` y configura las misma
 
 ## Pruebas y cobertura
 
-La compilación más reciente con JDK 21 y Maven 3.9.11 terminó en `BUILD SUCCESS`: **58 pruebas aprobadas**, sin fallos, errores ni pruebas omitidas. Se utilizó la base MySQL 8.4 de pruebas para la verificación.
+La compilación más reciente con JDK 21 y Maven 3.9.11 terminó en `BUILD SUCCESS`: **77 pruebas aprobadas**, sin fallos, errores ni pruebas omitidas. Se utilizó la base MySQL 8.4 de pruebas para la verificación.
 
 El plugin Maven de JaCoCo 0.8.15 ya estaba configurado. `clean verify` genera:
 
 - Reporte HTML: `target/site/jacoco/index.html`.
 - Reporte XML: `target/site/jacoco/jacoco.xml`.
 
-La suite verificada ahora cubre **271/271 lineas, 103/103 metodos y 42/42 ramas: 100 %** en las tres metricas. Se corrigieron las comprobaciones de nulos de los cinco controladores y se agregaron pruebas de entradas nulas y del arranque real de `main`, ademas de las pruebas HTTP existentes. No se excluyeron clases ni metodos. Consulta la [verificacion actual al 100 %](docs/cobertura-100.md) y el [resultado anterior](docs/cobertura-api.md). Coverage de Jenkins publica el XML generado por JaCoCo; vuelve a construir **CompilarAPIJava21** para actualizar tambien SonarQube.
+La suite verificada ahora cubre **296/296 lineas, 114/114 metodos y 44/44 ramas: 100 %** en las tres metricas. Se corrigieron las comprobaciones de nulos de los cinco controladores y se agregaron pruebas de entradas nulas y del arranque real de `main`, ademas de las pruebas HTTP existentes. No se excluyeron clases ni metodos. Consulta la [verificacion actual al 100 %](docs/cobertura-100.md) y el [resultado anterior](docs/cobertura-api.md). Coverage de Jenkins publica el XML generado por JaCoCo; vuelve a construir **CompilarAPIJava21** para actualizar tambien SonarQube.
 
 El POM ahora declara explícitamente Sonar Maven Plugin **5.5.0.6356** y Surefire **3.5.4**, además del JaCoCo **0.8.15** existente. Antes, Surefire se utilizaba con la versión 2.22.2 heredada de Spring Boot.
 
@@ -80,3 +80,7 @@ Utiliza la base `dbgestor_ci` en `mysql-java21-ci:3306` y obtiene el usuario y l
 Consulta la [guía de configuración del trabajo, credenciales y MySQL](docs/jenkins-java21.md). La ejecución #1 de `CompilarAPIJava21` terminó en `SUCCESS` con JDK 21.0.12.1 y Maven 3.9.11: 42 pruebas aprobadas, cero fallos y errores, y JAR generado. JUnit publicó los resultados y Coverage procesó el reporte de JaCoCo: 183 de 271 líneas cubiertas (67.53 %). Esta ejecución en Jenkins es adicional a la verificación local indicada arriba.
 
 La ejecución #1 es anterior a la incorporación de Sonar y la declaración explícita de Surefire. Las nuevas etapas requieren el servidor Jenkins `SonarServer` con su token y Semgrep 1.181.0 instalado en el agente. Consulta los requisitos en la guía anterior. Copia el Jenkinsfile completo en **Pipeline script** y vuelve a construir el trabajo para comprobar el pipeline actualizado.
+
+## Correcciones de las incidencias de SonarQube
+
+Se sustituyeron los 18 cuerpos HTTP que recibian entidades JPA por DTO y se aplico inyeccion por constructor a los cinco controladores. Las altas ignoran IDs impuestos; el registro asigna Estudiante y la actualizacion de perfil conserva el rol persistido. Consulta la [clasificacion, cambios, pruebas y verificaciones pendientes](docs/correcciones-sonarqube.md). La validacion directa paso 77 pruebas y mantuvo 100 % de cobertura Java; el cierre de incidencias requiere un nuevo analisis en Jenkins/SonarQube.

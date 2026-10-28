@@ -1,16 +1,18 @@
 # Cobertura Java del backend: 100 %
 
-Verificacion realizada el 27 de octubre de 2026 con JDK 21, Maven 3.9.11, Surefire 3.5.4, JaCoCo 0.8.15 y la base MySQL de CI, dentro del contenedor Jenkins.
+Verificacion realizada el 28 de octubre de 2026 con JDK 21, Maven 3.9.11, Surefire 3.5.4, JaCoCo 0.8.15 y la base MySQL de CI, dentro del contenedor Jenkins.
 
 | Metrica | Cubiertos | Sin cubrir | Cobertura |
 |---|---:|---:|---:|
-| Metodos | 103 | 0 | 100 % |
-| Lineas | 271 | 0 | 100 % |
-| Ramas | 42 | 0 | 100 % |
-| Instrucciones | 744 | 0 | 100 % |
-| Clases | 11 | 0 | 100 % |
+| Metodos | 114 | 0 | 100 % |
+| Lineas | 296 | 0 | 100 % |
+| Ramas | 44 | 0 | 100 % |
+| Instrucciones | 1047 | 0 | 100 % |
+| Clases | 22 | 0 | 100 % |
 
-La suite tiene **58 pruebas**, todas aprobadas, sin fallos, errores ni omisiones. No se excluyeron clases ni metodos, incluido `main`.
+La suite tiene **77 pruebas**, todas aprobadas, sin fallos, errores ni omisiones. No se excluyeron clases ni metodos, incluido `main`.
+
+La verificacion incluye las [correcciones de las 23 incidencias de SonarQube](correcciones-sonarqube.md), DTO y 19 casos adicionales de contratos y seguridad.
 
 ## Correccion y pruebas
 
