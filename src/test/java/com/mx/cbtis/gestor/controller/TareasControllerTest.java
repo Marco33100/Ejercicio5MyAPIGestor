@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.ArgumentMatchers.refEq;
-import static com.mx.cbtis.gestor.controller.SolicitudesTest.convertir;
+import static com.mx.cbtis.gestor.controller.SolicitudesFixture.convertir;
 import com.mx.cbtis.gestor.dto.*;
 import static org.mockito.Mockito.when;
 

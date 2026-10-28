@@ -107,6 +107,16 @@ otras vulnerabilidades.
 
 ## Referencias
 
+### Ajuste posterior: auxiliar de pruebas y java:S2187
+
+El siguiente análisis mostrado en Jenkins/SonarQube dejó una incidencia
+`java:S2187`: el auxiliar `SolicitudesTest` no contiene casos JUnit y su nombre
+lo identificaba como una clase de pruebas. Se renombró a `SolicitudesFixture`
+y se actualizaron sus cinco imports. Es una utilidad de conversión usada por
+las pruebas, por lo que no se añadieron tests artificiales ni supresiones.
+La verificación posterior volvió a aprobar 77 pruebas y conservó el 100 % de
+métodos, líneas y ramas. El cierre de esta nueva alerta requiere otro análisis.
+
 - [SonarSource: java:S4684](https://rules.sonarsource.com/java/RSPEC-4684/)
 - [SonarSource: java:S6813](https://rules.sonarsource.com/java/RSPEC-6813/)
 - [OWASP: Mass Assignment Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Mass_Assignment_Cheat_Sheet.html)
