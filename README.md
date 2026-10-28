@@ -71,6 +71,8 @@ El historial conserva un primer commit con el POM anterior y un segundo commit c
 
 ## Jenkins
 
+Para el tercer pipeline de la practica, consulta la [configuracion de **Base de Datos MySQL**](docs/jenkins-mysql.md) y su [script independiente](database/Jenkinsfile). Valida el SQL y ejecuta 21 pruebas en la base aislada `dbgestor_pipeline_ci`, utilizando la credencial `mysql-ci`. La prueba directa termino en `BUILD SUCCESS`; el trabajo debe construirse en Jenkins para publicar sus propios resultados.
+
 El repositorio incluye un [Jenkinsfile](Jenkinsfile) para compilar con las herramientas `JDK21` y `Maven3` (Maven 3.9.11), ejecutar las pruebas existentes con MySQL, publicar los resultados y la cobertura, analizar el proyecto con SonarQube y generar un reporte SAST con Semgrep.
 
 Utiliza la base `dbgestor_ci` en `mysql-java21-ci:3306` y obtiene el usuario y la contraseña de una credencial Jenkins con ID `mysql-ci`. Jenkins y MySQL deben compartir la red Docker `jenkins-java21-ci`.

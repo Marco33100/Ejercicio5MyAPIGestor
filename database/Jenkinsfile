@@ -1,0 +1,80 @@
+pipeline {
+    agent any
+    tools {
+        jdk 'JDK21'
+        maven 'Maven3'
+    }
+    options {
+        skipDefaultCheckout(true)
+        disableConcurrentBuilds()
+        timeout(time: 20, unit: 'MINUTES')
+    }
+    environment {
+        DB_HOST = 'mysql-java21-ci'
+        DB_PORT = '3306'
+        DB_NAME = 'dbgestor_pipeline_ci'
+    }
+    stages {
+        stage('Descargar proyecto') {
+            steps {
+                deleteDir()
+                withEnv(['GIT_CONFIG_COUNT=1', 'GIT_CONFIG_KEY_0=http.version', 'GIT_CONFIG_VALUE_0=HTTP/1.1']) {
+                    retry(2) {
+                        checkout scmGit(
+                            branches: [[name: '*/main']],
+                            extensions: [cloneOption(shallow: true, depth: 1, noTags: true, honorRefspec: true, timeout: 10)],
+                            userRemoteConfigs: [[url: 'https://github.com/Marco33100/Ejercicio5MyAPIGestor.git',
+                                refspec: '+refs/heads/main:refs/remotes/origin/main']]
+                        )
+                    }
+                }
+            }
+        }
+        stage('Verificar herramientas y SQL') {
+            steps {
+                sh 'java -version'
+                sh 'mvn -version'
+                sh 'cat database/src/main/resources/schema.sql'
+                sh '''
+                    mkdir -p reportes
+                    rm -f reportes/database-semgrep.json reportes/database-rules-test.json
+                    "$JENKINS_HOME/tools/semgrep-1.181.0/bin/semgrep" --test database/security --json > reportes/database-rules-test.json
+                '''
+            }
+        }
+        stage('Analisis de seguridad SQL') {
+            steps {
+                dir('.') {
+                    sh '''
+                        "$JENKINS_HOME/tools/semgrep-1.181.0/bin/semgrep" scan \
+                            --config database/security/reglas.yml --metrics=off \
+                            --exclude '**/target/**' --exclude 'target/**' \
+                            --include '*.sql' --error --json \
+                            --output reportes/database-semgrep.json database/src/main/resources
+                    '''
+                }
+            }
+        }
+        stage('Build & Test MySQL') {
+            steps {
+                dir('database') {
+                    withCredentials([usernamePassword(credentialsId: 'mysql-ci',
+                            usernameVariable: 'DB_USER', passwordVariable: 'DB_PASSWORD')]) {
+                        sh 'mvn --batch-mode --no-transfer-progress clean verify -Dsurefire.useFile=false'
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                if (fileExists('database/target/surefire-reports')) {
+                    junit testResults: 'database/target/surefire-reports/TEST-*.xml'
+                }
+            }
+            archiveArtifacts artifacts: 'reportes/database-*.json,database/target/database-summary.txt,database/src/main/resources/schema.sql',
+                allowEmptyArchive: true, fingerprint: true
+        }
+    }
+}

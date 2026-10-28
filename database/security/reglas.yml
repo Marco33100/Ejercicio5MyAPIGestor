@@ -1,0 +1,31 @@
+rules:
+  - id: db-no-drop-database
+    languages: [generic]
+    severity: ERROR
+    message: Un esquema de CI no debe eliminar bases de datos.
+    pattern-regex: '(?i)\bDROP\s+DATABASE\b'
+  - id: db-no-drop-table
+    languages: [generic]
+    severity: ERROR
+    message: Revisar las operaciones destructivas; este esquema debe ser idempotente.
+    pattern-regex: '(?i)\bDROP\s+TABLE\b'
+  - id: db-no-truncate
+    languages: [generic]
+    severity: ERROR
+    message: TRUNCATE no se revierte con el rollback usado en estas pruebas.
+    pattern-regex: '(?im)^\s*TRUNCATE\s+(?:TABLE\s+)?[a-zA-Z_`"]'
+  - id: db-no-global-grants
+    languages: [generic]
+    severity: ERROR
+    message: El esquema no debe conceder permisos globales sobre todas las bases.
+    pattern-regex: '(?is)\bGRANT\b[^;]*\bON\s+\*\.\*'
+  - id: db-no-inline-password
+    languages: [generic]
+    severity: ERROR
+    message: No guardar contrasenas de cuentas MySQL en el SQL versionado.
+    pattern-regex: '(?i)\bIDENTIFIED\s+BY\s+[''"][^''"]+[''"]'
+  - id: db-no-disabled-foreign-keys
+    languages: [generic]
+    severity: ERROR
+    message: No desactivar la integridad referencial durante la validacion.
+    pattern-regex: '(?i)\bFOREIGN_KEY_CHECKS\s*=\s*0\b'
