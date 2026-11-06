@@ -26,6 +26,6 @@ Los cinco controladores comparaban objetos mediante `objeto.equals(null)` antes 
 
 Configura `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER` y `DB_PASSWORD` para la base de pruebas. Ejecuta `mvn --batch-mode --no-transfer-progress clean verify -Dsurefire.useFile=false`. Los reportes quedan en `target/site/jacoco/index.html` y `target/site/jacoco/jacoco.xml`.
 
-En Jenkins, vuelve a construir **CompilarAPIJava21**. El pipeline existente descarga `main`, ejecuta las pruebas con la credencial `mysql-ci`, publica JaCoCo y envia el XML a SonarQube. La medicion anterior de SonarQube se actualiza cuando termina y se procesa ese nuevo analisis; no se cambia modificando el reporte a mano.
+El trabajo **CompilarAPIJava21 #8** terminó en SUCCESS con 77 pruebas aprobadas y publicó estos contadores. Las capturas posteriores de SonarQube muestran 100 % de cobertura, cero incidencias abiertas y Quality Gate aprobado. Semgrep analizó 49 archivos con 203 reglas y no encontró hallazgos; dejó una advertencia PartialParsing en el Maven Wrapper mvnw.
 
-La verificacion directa en el contenedor Jenkins no sustituye el resultado del trabajo. Esta cobertura del 100 % tampoco significa que todos los hallazgos de seguridad, mantenibilidad o fiabilidad de SonarQube esten resueltos.
+Una nueva modificación requiere otra ejecución para renovar la evidencia. El 100 % de cobertura y cero hallazgos corresponden al alcance configurado y no garantizan ausencia de vulnerabilidades.

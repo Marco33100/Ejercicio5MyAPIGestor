@@ -84,21 +84,11 @@ La cobertura mide ejecución de Java, no la calidad completa de cada aserción
 ni la cobertura visual del navegador. Los records tienen métodos generados
 que JaCoCo filtra automáticamente; no se añadieron exclusiones manuales.
 
-## Comprobación pendiente en el trabajo de Jenkins
+## Resultado posterior en Jenkins y SonarQube
 
-Las correcciones están implementadas y probadas, pero el resultado de Semgrep
-no sustituye a SonarQube: son analizadores diferentes. Ejecutar nuevamente el
-trabajo **CompilarAPIJava21** que descarga `main`, manteniendo su Pipeline
-script actual. No es necesario cambiar el script para estas correcciones.
+El trabajo **CompilarAPIJava21 #8** finalizó en SUCCESS con 77 pruebas aprobadas, 114/114 métodos, 296/296 líneas y 44/44 ramas cubiertos. El análisis posterior mostrado en SonarQube dejó cero incidencias abiertas en seguridad, fiabilidad y mantenibilidad, con Quality Gate aprobado.
 
-Después de que termine el procesamiento del análisis en SonarQube:
-
-1. Comprobar la revisión Git analizada y los resultados de las 77 pruebas.
-2. Guardar el reporte JaCoCo y su cobertura de métodos.
-3. Revisar `Issues`, incluidas las incidencias cerradas, y confirmar el estado
-   de las 18 `S4684` y las 5 `S6813`.
-4. Adjuntar la captura inicial y el resultado posterior. No afirmar que todas
-   las incidencias están cerradas antes de comprobar ese nuevo análisis.
+En esa ejecución, Semgrep utilizó 203 reglas sobre 49 archivos y no encontró hallazgos. El JSON conserva una advertencia PartialParsing en mvnw, diferente del resultado de la validación directa anterior. La lista scanned no contiene archivos dentro de target; se respeta la exclusión de .gitignore. La advertencia limita el análisis completo del wrapper.
 
 Esta corrección no implementa autenticación/autorización completa ni cambia
 el almacenamiento o exposición de contraseñas del sistema heredado. Los DTO
@@ -115,7 +105,7 @@ lo identificaba como una clase de pruebas. Se renombró a `SolicitudesFixture`
 y se actualizaron sus cinco imports. Es una utilidad de conversión usada por
 las pruebas, por lo que no se añadieron tests artificiales ni supresiones.
 La verificación posterior volvió a aprobar 77 pruebas y conservó el 100 % de
-métodos, líneas y ramas. El cierre de esta nueva alerta requiere otro análisis.
+métodos, líneas y ramas. El análisis posterior de la ejecución #8 ya no mostró esta alerta abierta.
 
 - [SonarSource: java:S4684](https://rules.sonarsource.com/java/RSPEC-4684/)
 - [SonarSource: java:S6813](https://rules.sonarsource.com/java/RSPEC-6813/)
