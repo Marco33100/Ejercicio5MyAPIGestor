@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UsuarioController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ejercicio5MyAPIGestor</a> &gt; <a href="index.source.html" class="el_package">com.mx.cbtis.gestor.controller</a> &gt; <span class="el_source">UsuarioController.java</span></div><h1>UsuarioController.java</h1><pre class="source lang-java linenums">package com.mx.cbtis.gestor.controller;
+
+import com.mx.cbtis.gestor.dto.UsuarioSolicitud;
+import com.mx.cbtis.gestor.dto.UsuarioId;
+import com.mx.cbtis.gestor.dto.LoginSolicitud;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mx.cbtis.gestor.modelo.Usuario;
+import com.mx.cbtis.gestor.repository.UsuarioRepository;
+
+@RestController
+public class UsuarioController {
+	
+	private final UsuarioRepository usuariotable;
+
+<span class="fc" id="L26">	public UsuarioController(UsuarioRepository usuariotable) {</span>
+<span class="fc" id="L27">		this.usuariotable = usuariotable;</span>
+<span class="fc" id="L28">	}</span>
+	
+	@PostMapping(&quot;/getUsuarioLogin&quot;)
+	public Usuario getUsuarioLogin(@RequestBody LoginSolicitud userParam) {
+		
+<span class="fc" id="L33">		Optional&lt;Usuario&gt; optionaluser = usuariotable.findByCorreoPass(</span>
+<span class="fc" id="L34">				userParam.correoElectronico(),</span>
+<span class="fc" id="L35">				userParam.contrasena());</span>
+		
+<span class="fc" id="L37">		Usuario user = new Usuario();</span>
+		
+<span class="fc bfc" id="L39" title="All 2 branches covered.">		if(optionaluser.isPresent()) {</span>
+<span class="fc" id="L40">			user = optionaluser.get();</span>
+		}else {
+<span class="fc" id="L42">			user.setNombre(&quot;000&quot;);</span>
+		}
+		
+<span class="fc" id="L45">		return user;</span>
+	}
+	
+	@GetMapping(&quot;/buscarUsuario&quot;)
+	public Usuario getUsuario(@RequestParam int id) {
+		
+<span class="fc" id="L51">		Usuario buscar = new Usuario();</span>
+<span class="fc" id="L52">		Optional&lt;Usuario&gt; usuario = usuariotable.findById(id);</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if(usuario.isPresent())</span>
+		{
+<span class="fc" id="L55">			buscar = usuario.get();</span>
+		}
+		
+<span class="fc" id="L58">		return buscar;</span>
+	}
+	
+	@PostMapping(&quot;/addUsuario&quot;)
+	public int addUsuario(@RequestBody UsuarioSolicitud usuario) {
+<span class="fc" id="L63">		int flag = 0;</span>
+<span class="fc bfc" id="L64" title="All 2 branches covered.">		if (usuario != null) {</span>
+<span class="fc" id="L65">			usuariotable.save(new Usuario(null, usuario.nombre(), usuario.correoElectronico(), usuario.contrasena(), &quot;Estudiante&quot;, usuario.imagenUsuario()));</span>
+<span class="fc" id="L66">			flag = 1;</span>
+		}
+		
+<span class="fc" id="L69">		return flag;</span>
+	}
+	
+	@PostMapping(&quot;/updateUsuario&quot;)
+	public int updateUsuario(@RequestBody UsuarioSolicitud usuario) {
+<span class="fc" id="L74">		int flag = 0;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">		if (usuario != null) {</span>
+<span class="fc" id="L76">			Optional&lt;Usuario&gt; encontrado = usuariotable.findById(usuario.idUsuario());</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">            if (encontrado.isEmpty()) {</span>
+<span class="fc" id="L78">                return 0;</span>
+            }
+<span class="fc" id="L80">            Usuario existente = encontrado.get();</span>
+<span class="fc" id="L81">            usuariotable.save(new Usuario(usuario.idUsuario(), usuario.nombre(), usuario.correoElectronico(), usuario.contrasena(), existente.getRol(), usuario.imagenUsuario()));</span>
+<span class="fc" id="L82">			flag = 1;</span>
+		}
+		
+<span class="fc" id="L85">		return flag;</span>
+	}
+	
+	@DeleteMapping(&quot;/deleteUsuario&quot;)
+	public int deleteUsuario(@RequestBody UsuarioId usuario) {
+<span class="fc" id="L90">		int flag = 0;</span>
+<span class="fc bfc" id="L91" title="All 2 branches covered.">		if (usuario != null) {</span>
+<span class="fc" id="L92">			usuariotable.deleteById(usuario.idUsuario());</span>
+<span class="fc" id="L93">			flag = 1;</span>
+		}
+		
+<span class="fc" id="L96">		return flag;</span>
+	}
+	
+	@PostMapping(&quot;/buscarUsuarios&quot;)
+	public List&lt;Usuario&gt; getUsuarios(){
+<span class="fc" id="L101">		List&lt;Usuario&gt; listaUsuarios = new ArrayList&lt;&gt;(); </span>
+<span class="fc" id="L102">		usuariotable.findAll().forEach(listaUsuarios::add);</span>
+<span class="fc" id="L103">		return listaUsuarios;</span>
+	}		
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

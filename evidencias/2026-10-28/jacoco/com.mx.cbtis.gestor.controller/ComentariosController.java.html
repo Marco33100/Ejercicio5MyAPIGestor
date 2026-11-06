@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ComentariosController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ejercicio5MyAPIGestor</a> &gt; <a href="index.source.html" class="el_package">com.mx.cbtis.gestor.controller</a> &gt; <span class="el_source">ComentariosController.java</span></div><h1>ComentariosController.java</h1><pre class="source lang-java linenums">package com.mx.cbtis.gestor.controller;
+
+import com.mx.cbtis.gestor.dto.ComentariosSolicitud;
+import com.mx.cbtis.gestor.dto.ComentariosId;
+import com.mx.cbtis.gestor.dto.TareasId;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mx.cbtis.gestor.modelo.Comentarios;
+import com.mx.cbtis.gestor.repository.ComentariosRepository;
+
+@RestController
+public class ComentariosController {
+	
+	private final ComentariosRepository comentariostable;
+
+<span class="fc" id="L26">	public ComentariosController(ComentariosRepository comentariostable) {</span>
+<span class="fc" id="L27">		this.comentariostable = comentariostable;</span>
+<span class="fc" id="L28">	}</span>
+	
+	@PostMapping(&quot;/getComentario&quot;)
+
+	public List&lt;Comentarios&gt; getComentario(@RequestBody TareasId idComentario){
+<span class="fc" id="L33">		List&lt;Comentarios&gt; listaComentarios = comentariostable.findByTarea(idComentario.idTarea());</span>
+<span class="fc" id="L34">		return listaComentarios;</span>
+	}
+	
+	@GetMapping(&quot;/buscarComentario&quot;)
+	public Comentarios getComentario(@RequestParam int id) {
+		
+<span class="fc" id="L40">		Comentarios buscar = new Comentarios();</span>
+<span class="fc" id="L41">		Optional&lt;Comentarios&gt; comentario = comentariostable.findById(id);</span>
+<span class="fc bfc" id="L42" title="All 2 branches covered.">		if(comentario.isPresent()) {</span>
+<span class="fc" id="L43">			buscar = comentario.get();</span>
+		}
+		
+<span class="fc" id="L46">		return buscar;</span>
+	}
+	
+	@PostMapping(&quot;/addComentario&quot;)
+	public int addComentario(@RequestBody ComentariosSolicitud comentario) {
+		
+<span class="fc" id="L52">		int flag = 0;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (comentario != null) {</span>
+<span class="fc" id="L54">			comentariostable.save(new Comentarios(null, comentario.idUsuario(), comentario.idTarea(), comentario.textoComentario(), comentario.fechaHora()));</span>
+<span class="fc" id="L55">			flag = 1;</span>
+		}
+		
+<span class="fc" id="L58">		return flag;</span>
+	}
+	
+	@PostMapping(&quot;/updateComentario&quot;)
+	public int updateComentario(@RequestBody ComentariosSolicitud comentario) {
+		
+<span class="fc" id="L64">		int flag = 0;</span>
+<span class="fc bfc" id="L65" title="All 2 branches covered.">		if (comentario != null) {</span>
+<span class="fc" id="L66">			comentariostable.save(new Comentarios(comentario.idComentario(), comentario.idUsuario(), comentario.idTarea(), comentario.textoComentario(), comentario.fechaHora()));</span>
+<span class="fc" id="L67">			flag = 1;</span>
+		}
+		
+<span class="fc" id="L70">		return flag;</span>
+	}
+	
+	@DeleteMapping(&quot;/deleteComentario&quot;)
+	public int deleteComentario(@RequestBody ComentariosId comentario) {
+		
+<span class="fc" id="L76">		int flag = 0;</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">		if (comentario != null) {</span>
+<span class="fc" id="L78">			comentariostable.deleteById(comentario.idComentario());</span>
+<span class="fc" id="L79">			flag = 1;</span>
+		}
+		
+<span class="fc" id="L82">		return flag;</span>
+	}
+	
+	@PostMapping(&quot;/buscarComentarios&quot;)
+	public List&lt;Comentarios&gt; getComentarios(){
+		
+<span class="fc" id="L88">		List&lt;Comentarios&gt; listaComentarios = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L89">		comentariostable.findAll().forEach(listaComentarios :: add);</span>
+<span class="fc" id="L90">		return listaComentarios;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

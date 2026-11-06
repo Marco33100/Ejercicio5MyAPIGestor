@@ -1,0 +1,88 @@
+{
+  "fecha_ejecucion": "2026-10-28",
+  "trabajo": "CompilarAPIJava21",
+  "ejecucion": 8,
+  "resultado": "SUCCESS",
+  "suites": [
+    {
+      "name": "com.mx.cbtis.gestor.controller.AsignacionesControllerTest",
+      "tests": "7",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.043"
+    },
+    {
+      "name": "com.mx.cbtis.gestor.controller.ComentariosControllerTest",
+      "tests": "9",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.466"
+    },
+    {
+      "name": "com.mx.cbtis.gestor.controller.ContratoJsonApiTest",
+      "tests": "10",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.229"
+    },
+    {
+      "name": "com.mx.cbtis.gestor.controller.ControladoresEntradaNulaTest",
+      "tests": "5",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.03"
+    },
+    {
+      "name": "com.mx.cbtis.gestor.controller.ProyectosControllerTest",
+      "tests": "7",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.061"
+    },
+    {
+      "name": "com.mx.cbtis.gestor.controller.SeguridadEntradasApiTest",
+      "tests": "19",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "1.027"
+    },
+    {
+      "name": "com.mx.cbtis.gestor.controller.TareasControllerTest",
+      "tests": "9",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.068"
+    },
+    {
+      "name": "com.mx.cbtis.gestor.controller.UsuarioControllerTest",
+      "tests": "9",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.075"
+    },
+    {
+      "name": "com.mx.cbtis.gestor.Ejercicio5MyApiGestorApplicationTests",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "7.761"
+    },
+    {
+      "name": "com.mx.cbtis.gestor.Ejercicio5MyApiGestorMainTest",
+      "tests": "1",
+      "failures": "0",
+      "errors": "0",
+      "skipped": "0",
+      "time": "0.592"
+    }
+  ]
+}

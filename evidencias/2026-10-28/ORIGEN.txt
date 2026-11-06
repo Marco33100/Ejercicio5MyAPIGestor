@@ -1,0 +1,6 @@
+Evidencias conservadas del trabajo CompilarAPIJava21 #8 del 28 de octubre de 2026.
+JaCoCo HTML y XML copiados de los reportes publicados por Jenkins sin editar contadores.
+pruebas.json resume atributos de JUnit; omite propiedades del sistema y logs.
+jenkins.json conserva resultados y extractos de consola de las ejecuciones verificadas.
+No corresponde a una nueva ejecución del 6 de noviembre.
+Para navegar el HTML, descargar el repositorio y abrir jacoco/index.html en el navegador.

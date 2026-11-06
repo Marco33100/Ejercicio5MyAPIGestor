@@ -1,0 +1,60 @@
+[
+  {
+    "name": "Base de Datos MySQL",
+    "stages": [
+      "Descargar proyecto",
+      "Verificar herramientas y SQL",
+      "Analisis de seguridad SQL",
+      "Build & Test MySQL"
+    ],
+    "sonar": false,
+    "semgrep": true,
+    "explicitTargetExclusion": true,
+    "sqlChecks": true,
+    "lastBuild": "1",
+    "result": "SUCCESS",
+    "timestamp": "1793146624275",
+    "evidence": [
+      "Ran 6 rules on 1 file: 0 findings.",
+      "[INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.651 s -- in com.mx.cbtis.database.BaseDatosMySqlTest",
+      "[INFO] Tests run: 21, Failures: 0, Errors: 0, Skipped: 0",
+      "Finished: SUCCESS"
+    ]
+  },
+  {
+    "name": "CompilarAPIJava21",
+    "stages": [
+      "Descargar proyecto",
+      "Ver Directorio",
+      "Verificar Java y Maven",
+      "Build & Test",
+      "Publicar cobertura",
+      "SonarQube Analysis",
+      "Security Scan (SAST) - Semgrep"
+    ],
+    "sonar": true,
+    "semgrep": true,
+    "explicitTargetExclusion": false,
+    "sqlChecks": true,
+    "lastBuild": "8",
+    "result": "SUCCESS",
+    "timestamp": "1793217867623",
+    "evidence": [
+      "[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.027 s -- in com.mx.cbtis.gestor.controller.SeguridadEntradasApiTest",
+      "[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.229 s -- in com.mx.cbtis.gestor.controller.ContratoJsonApiTest",
+      "[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.061 s -- in com.mx.cbtis.gestor.controller.ProyectosControllerTest",
+      "[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.068 s -- in com.mx.cbtis.gestor.controller.TareasControllerTest",
+      "[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.030 s -- in com.mx.cbtis.gestor.controller.ControladoresEntradaNulaTest",
+      "[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.075 s -- in com.mx.cbtis.gestor.controller.UsuarioControllerTest",
+      "[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.043 s -- in com.mx.cbtis.gestor.controller.AsignacionesControllerTest",
+      "[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.592 s -- in com.mx.cbtis.gestor.Ejercicio5MyApiGestorMainTest",
+      "[INFO] Tests run: 77, Failures: 0, Errors: 0, Skipped: 0",
+      "[Coverage] Method Coverage: 100.00% (114/114)",
+      "[Coverage] Line Coverage: 100.00% (296/296)",
+      "[Coverage] Branch Coverage: 100.00% (44/44)",
+      "[INFO] ANALYSIS SUCCESSFUL, you can find the results at: http://host.docker.internal:9000/dashboard?id=Ejercicio5MyAPIGestor",
+      "Ran 203 rules on 49 files: 0 findings.",
+      "Finished: SUCCESS"
+    ]
+  }
+]

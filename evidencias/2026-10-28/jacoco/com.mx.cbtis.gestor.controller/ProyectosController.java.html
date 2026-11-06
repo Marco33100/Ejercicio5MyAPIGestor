@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ProyectosController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Ejercicio5MyAPIGestor</a> &gt; <a href="index.source.html" class="el_package">com.mx.cbtis.gestor.controller</a> &gt; <span class="el_source">ProyectosController.java</span></div><h1>ProyectosController.java</h1><pre class="source lang-java linenums">package com.mx.cbtis.gestor.controller;
+
+import com.mx.cbtis.gestor.dto.ProyectosSolicitud;
+import com.mx.cbtis.gestor.dto.ProyectosId;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mx.cbtis.gestor.modelo.Proyectos;
+import com.mx.cbtis.gestor.repository.ProtectosRepository;
+
+@RestController
+public class ProyectosController {
+	
+	private final ProtectosRepository proyectostable;
+
+<span class="fc" id="L25">	public ProyectosController(ProtectosRepository proyectostable) {</span>
+<span class="fc" id="L26">		this.proyectostable = proyectostable;</span>
+<span class="fc" id="L27">	}</span>
+	
+	
+	@GetMapping(&quot;/buscarProyecto&quot;)
+	public Proyectos getProyecto(@RequestParam int id_proyecto) {
+		
+<span class="fc" id="L33">		Proyectos buscar = new Proyectos();</span>
+<span class="fc" id="L34">		Optional&lt;Proyectos&gt; proyecto = proyectostable.findById(id_proyecto);</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">		if(proyecto.isPresent()) {</span>
+<span class="fc" id="L36">			buscar = proyecto.get();</span>
+		}
+		
+<span class="fc" id="L39">		return buscar;</span>
+	}
+	
+	@PostMapping(&quot;/addProyecto&quot;)
+	public int addProyecto(@RequestBody ProyectosSolicitud proyecto) {
+		
+<span class="fc" id="L45">		int flag = 0;</span>
+<span class="fc bfc" id="L46" title="All 2 branches covered.">		if (proyecto != null) {</span>
+			
+<span class="fc" id="L48">			proyectostable.save(new Proyectos(null, proyecto.nombre(), proyecto.descripcion(), proyecto.fechaInicio(), proyecto.fechaFinalizacion(), proyecto.estadoProyecto(), proyecto.fondo()));</span>
+<span class="fc" id="L49">			flag = 1;</span>
+		}
+		
+<span class="fc" id="L52">		return flag;</span>
+	}
+	
+	@PostMapping(&quot;/updateProyecto&quot;)
+	public int updateProyecto(@RequestBody ProyectosSolicitud proyecto) {
+		
+<span class="fc" id="L58">		int flag = 0;</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">		if (proyecto != null) {</span>
+<span class="fc" id="L60">			proyectostable.save(new Proyectos(proyecto.idProyecto(), proyecto.nombre(), proyecto.descripcion(), proyecto.fechaInicio(), proyecto.fechaFinalizacion(), proyecto.estadoProyecto(), proyecto.fondo()));</span>
+<span class="fc" id="L61">			flag = 1;</span>
+		}
+		
+<span class="fc" id="L64">		return flag;</span>
+	}
+	
+	@DeleteMapping(&quot;/deleteProyecto&quot;)
+	public int deleteProyecto(@RequestBody ProyectosId proyecto) {
+		
+<span class="fc" id="L70">		int flag = 0;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		if (proyecto != null) {</span>
+<span class="fc" id="L72">			proyectostable.deleteById(proyecto.idProyecto());</span>
+<span class="fc" id="L73">			flag = 1;</span>
+		}
+		
+<span class="fc" id="L76">		return flag;</span>
+	}   
+	
+	@PostMapping(&quot;/buscarProyectos&quot;)
+	public List&lt;Proyectos&gt; getProyectos(){
+		
+<span class="fc" id="L82">		List&lt;Proyectos&gt; listaProyectos = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L83">		proyectostable.findAll().forEach(listaProyectos :: add);</span>
+<span class="fc" id="L84">		return listaProyectos;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

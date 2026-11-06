@@ -1,0 +1,6 @@
+Engine=MySQL
+Version=8.4.11
+Schema=dbgestor_pipeline_ci
+BusinessTables=5
+ForeignKeys=4
+BusinessRowsAfterTests=0

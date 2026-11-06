@@ -1,0 +1,96 @@
+{
+    "config_missing_tests": [],
+    "config_missing_fixtests": [],
+    "config_with_errors": [],
+    "results": {
+        "database/security/reglas.yml": {
+            "checks": {
+                "db-no-drop-table": {
+                    "passed": true,
+                    "matches": {
+                        "/var/jenkins_home/workspace/Base de Datos MySQL/database/security/reglas.sql": {
+                            "expected_lines": [
+                                5
+                            ],
+                            "reported_lines": [
+                                5
+                            ]
+                        }
+                    },
+                    "errors": []
+                },
+                "db-no-global-grants": {
+                    "passed": true,
+                    "matches": {
+                        "/var/jenkins_home/workspace/Base de Datos MySQL/database/security/reglas.sql": {
+                            "expected_lines": [
+                                9
+                            ],
+                            "reported_lines": [
+                                9
+                            ]
+                        }
+                    },
+                    "errors": []
+                },
+                "db-no-truncate": {
+                    "passed": true,
+                    "matches": {
+                        "/var/jenkins_home/workspace/Base de Datos MySQL/database/security/reglas.sql": {
+                            "expected_lines": [
+                                7
+                            ],
+                            "reported_lines": [
+                                7
+                            ]
+                        }
+                    },
+                    "errors": []
+                },
+                "db-no-inline-password": {
+                    "passed": true,
+                    "matches": {
+                        "/var/jenkins_home/workspace/Base de Datos MySQL/database/security/reglas.sql": {
+                            "expected_lines": [
+                                11
+                            ],
+                            "reported_lines": [
+                                11
+                            ]
+                        }
+                    },
+                    "errors": []
+                },
+                "db-no-disabled-foreign-keys": {
+                    "passed": true,
+                    "matches": {
+                        "/var/jenkins_home/workspace/Base de Datos MySQL/database/security/reglas.sql": {
+                            "expected_lines": [
+                                13
+                            ],
+                            "reported_lines": [
+                                13
+                            ]
+                        }
+                    },
+                    "errors": []
+                },
+                "db-no-drop-database": {
+                    "passed": true,
+                    "matches": {
+                        "/var/jenkins_home/workspace/Base de Datos MySQL/database/security/reglas.sql": {
+                            "expected_lines": [
+                                3
+                            ],
+                            "reported_lines": [
+                                3
+                            ]
+                        }
+                    },
+                    "errors": []
+                }
+            }
+        }
+    },
+    "fixtest_results": {}
+}
