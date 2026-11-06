@@ -96,15 +96,19 @@ Evidencia compartida el **28 de octubre de 2026**: ambos proyectos aparecen con 
 
 ![Análisis final de SonarQube del cliente y la API](.github/assets/sonarqube-final.png)
 
-### Servicios locales de la práctica
+### Resultados de Jenkins
 
-- [Jenkins ejecución #8](http://127.0.0.1:8080/job/CompilarAPIJava21/8/).
-- [JaCoCo en Coverage](http://127.0.0.1:8080/job/CompilarAPIJava21/8/coverage/).
-- [Resultado de los tests](http://127.0.0.1:8080/job/CompilarAPIJava21/8/testReport/).
-- [SonarQube proyecto](http://127.0.0.1:9000/dashboard?id=Ejercicio5MyAPIGestor).
-- [SonarQube incidencias](http://127.0.0.1:9000/project/issues?id=Ejercicio5MyAPIGestor).
+Capturas compartidas el **6 de noviembre de 2026** de la ejecución **#8 del 28 de octubre de 2026**. Las imágenes se muestran directamente en GitHub; no hace falta abrir Jenkins en localhost.
 
-Los enlaces `127.0.0.1` solo funcionan en el equipo con Jenkins y SonarQube. La captura y los archivos versionados permiten revisar cobertura y resultados desde otro equipo. El análisis final de SonarQube mostrado durante la práctica dejó **0 incidencias abiertas** en seguridad, fiabilidad y mantenibilidad, **Quality Gate aprobado**, **100 % de cobertura** y **0 % de duplicación**. Es un resultado del análisis configurado, no una garantía de ausencia de vulnerabilidades.
+**Ejecución aprobada.** El estado muestra el commit analizado, cobertura de líneas del **100 %** y resultado de pruebas sin fallos.
+
+![Ejecución Jenkins aprobada del backend](.github/assets/jenkins-ejecucion.png)
+
+**Pruebas automatizadas.** Jenkins registra **77 pruebas aprobadas**, **0 fallidas** y **0 omitidas**.
+
+![Resultado de las 77 pruebas aprobadas en Jenkins](.github/assets/jenkins-tests.png)
+
+Los [resultados y extractos de consola](evidencias/2026-10-28/jenkins.json) y el [resumen de suites JUnit](evidencias/2026-10-28/pruebas.json) complementan las capturas. La cobertura JaCoCo y el análisis final de SonarQube se muestran arriba.
 
 Semgrep de la API ejecutó **203 reglas sobre 49 archivos**, con **0 hallazgos**. El JSON registra una advertencia **PartialParsing en mvnw**, que limita el análisis completo de ese script. No se analizaron archivos target: se respetó su exclusión en .gitignore y se comprobó la lista scanned. El pipeline SQL excluye explícitamente target/** y **/target/** y encontró cero hallazgos con sus seis reglas.
 
