@@ -90,6 +90,12 @@ La captura compartida el **6 de noviembre de 2026** muestra el resultado conserv
 
 GitHub muestra el código de los archivos HTML. Para navegar el informe JaCoCo, descarga el repositorio completo y abre `evidencias/2026-10-28/jacoco/index.html`; conserva sus carpetas de estilos y páginas. El XML y los JSON se pueden consultar directamente en GitHub.
 
+### Captura del análisis final de SonarQube
+
+Evidencia compartida el **28 de octubre de 2026**: ambos proyectos aparecen con **Quality Gate aprobado**, **100 % de cobertura**, **0 incidencias de seguridad, fiabilidad y mantenibilidad** y **0 % de duplicación**. Esta imagen está guardada en GitHub y puede consultarse desde cualquier equipo, sin acceder a los servicios locales.
+
+![Análisis final de SonarQube del cliente y la API](.github/assets/sonarqube-final.png)
+
 ### Servicios locales de la práctica
 
 - [Jenkins ejecución #8](http://127.0.0.1:8080/job/CompilarAPIJava21/8/).
