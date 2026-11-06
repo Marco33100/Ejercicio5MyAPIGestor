@@ -112,7 +112,26 @@ Los [resultados y extractos de consola](evidencias/2026-10-28/jenkins.json) y el
 
 Semgrep de la API ejecutó **203 reglas sobre 49 archivos**, con **0 hallazgos**. El JSON registra una advertencia **PartialParsing en mvnw**, que limita el análisis completo de ese script. No se analizaron archivos target: se respetó su exclusión en .gitignore y se comprobó la lista scanned. El pipeline SQL excluye explícitamente target/** y **/target/** y encontró cero hallazgos con sus seis reglas.
 
-El tercer trabajo [Base de Datos MySQL #1](http://127.0.0.1:8080/job/Base%20de%20Datos%20MySQL/1/) publicó **21 pruebas aprobadas** y sus [artefactos](http://127.0.0.1:8080/job/Base%20de%20Datos%20MySQL/1/artifact/). Consulta la [clasificación y corrección de las incidencias](docs/correcciones-sonarqube.md).
+### Pipeline de base de datos MySQL
+
+El tercer pipeline valida el esquema SQL y ejecuta pruebas con JDBC en la base aislada `dbgestor_pipeline_ci`. La ejecución **#1 del 28 de octubre de 2026** terminó correctamente, con **21 pruebas aprobadas**, sin fallos ni omisiones. Las siguientes capturas se compartieron el **6 de noviembre de 2026** y están disponibles directamente en GitHub.
+
+**Panel del trabajo y artefactos publicados.** Jenkins conserva `schema.sql`, `database-summary.txt`, `database-rules-test.json` y `database-semgrep.json`.
+
+![Panel del pipeline Base de Datos MySQL y artefactos SQL](.github/assets/mysql-panel.png)
+
+**Ejecución #1 aprobada.** Se identifica la revisión Git analizada y el resultado de pruebas sin fallos.
+
+![Ejecución MySQL número 1 completada correctamente en Jenkins](.github/assets/mysql-ejecucion.png)
+
+- [Resumen de las 21 pruebas de MySQL](evidencias/2026-10-28/pruebas-mysql.json).
+- [Resumen de la base después de las pruebas](evidencias/2026-10-28/database-summary.txt).
+- [Pruebas de las seis reglas de seguridad SQL](evidencias/2026-10-28/database-rules-test.json).
+- [Reporte del escaneo SQL con cero hallazgos](evidencias/2026-10-28/database-semgrep.json).
+- [Esquema SQL utilizado](database/src/main/resources/schema.sql).
+- [Script del pipeline MySQL](database/Jenkinsfile).
+
+Estas pruebas verifican el esquema y las operaciones de base de datos; su resultado no es un porcentaje de cobertura Java de JaCoCo. Consulta también la [clasificación y corrección de las incidencias de la API](docs/correcciones-sonarqube.md).
 
 ### Código y commits
 
