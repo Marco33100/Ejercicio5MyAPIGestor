@@ -37,6 +37,18 @@ La API queda en [http://localhost:8081](http://localhost:8081). La raíz no cont
 
 En Linux o macOS utiliza `./mvnw` y configura las mismas variables de entorno si corresponde.
 
+## Desplegar en Render con Docker
+
+Este repositorio incluye un `Dockerfile` para publicar la API como **Web Service** en Render:
+
+1. Sube estos cambios a la rama del repositorio de la API en GitHub.
+2. En Render, crea un **New > Web Service**, conecta el repositorio de la API y selecciona **Docker** como runtime. Deja vacío **Root Directory** si el Dockerfile está en la raíz.
+3. En **Environment Variables**, agrega `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER` y `DB_PASSWORD` con los datos de conexión de tu proveedor MySQL-compatible (por ejemplo, TiDB Cloud). No incluyas estas credenciales en Git.
+4. Crea el servicio. Render define `PORT` y la API lo usa automáticamente.
+5. Cuando termine el despliegue, copia la URL pública del servicio, por ejemplo `https://mi-api.onrender.com`; la necesitarás para configurar el cliente.
+
+El build Docker omite la ejecución de pruebas porque las pruebas de integración de la API requieren una base MySQL disponible. La imagen no incluye MySQL: la base de datos debe crearse aparte y conservarse allí.
+
 ## Pruebas y cobertura
 
 Resultado conservado de Jenkins **CompilarAPIJava21 #8**, verificado el **28 de octubre de 2026**: **SUCCESS**. 77 pruebas aprobadas; 114/114 métodos, 296/296 líneas y 44/44 ramas cubiertos al 100 %. No hubo fallos, errores ni omisiones. Estas evidencias corresponden a esa revisión y no implican que se haya ejecutado una compilación nueva al editar este README.
