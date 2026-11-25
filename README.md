@@ -37,17 +37,16 @@ La API queda en [http://localhost:8081](http://localhost:8081). La raíz no cont
 
 En Linux o macOS utiliza `./mvnw` y configura las mismas variables de entorno si corresponde.
 
-## Desplegar en Render con Docker
+## Desplegar en AWS EC2
 
-Este repositorio incluye un `Dockerfile` para publicar la API como **Web Service** en Render:
+La API corre en una VM EC2 (Ubuntu 24.04, `us-east-2`) junto con el cliente, MySQL y el monitoreo. El despliegue está automatizado en el repositorio [Ejercicio5Infra](https://github.com/Marco33100/Ejercicio5Infra): Terraform crea la VM y Ansible instala Docker y levanta todo con Docker Compose.
 
-1. Sube estos cambios a la rama del repositorio de la API en GitHub.
-2. En Render, crea un **New > Web Service**, conecta el repositorio de la API y selecciona **Docker** como runtime. Deja vacío **Root Directory** si el Dockerfile está en la raíz.
-3. En **Environment Variables**, agrega `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER` y `DB_PASSWORD` con los datos de conexión de tu proveedor MySQL-compatible (por ejemplo, TiDB Cloud). No incluyas estas credenciales en Git.
-4. Crea el servicio. Render define `PORT` y la API lo usa automáticamente.
-5. Cuando termine el despliegue, copia la URL pública del servicio, por ejemplo `https://mi-api.onrender.com`; la necesitarás para configurar el cliente.
+- Docker Compose construye la imagen **en la VM, directamente desde la rama `main` de este repositorio**, con el [Dockerfile](Dockerfile) incluido (no hay registro de imágenes).
+- MySQL 8.4 corre como contenedor de la misma Compose, con volumen persistente. `DB_HOST=mysql`, `DB_NAME=dbgestor` y `DB_USER`/`DB_PASSWORD` llegan desde un `.env` de la VM (permisos 600) generado por Ansible; no están en Git.
+- La API solo se publica en `127.0.0.1:8081` de la VM: **no es accesible desde Internet**. Solo el cliente la consume, por la red interna de Compose (`http://api:8081`).
+- `MANAGEMENT_SERVER_PORT=9091` publica las métricas de Actuator solo en la red interna, para Prometheus.
 
-El build Docker omite la ejecución de pruebas porque las pruebas de integración de la API requieren una base MySQL disponible. La imagen no incluye MySQL: la base de datos debe crearse aparte y conservarse allí.
+El build Docker omite la ejecución de pruebas porque las pruebas de integración de la API requieren una base MySQL disponible; las pruebas corren en Jenkins. Para desplegar una nueva versión: haz merge a `main` y ejecuta `.\iac.ps1 deploy` en Ejercicio5Infra. Jenkins no despliega a AWS.
 
 ## Pruebas y cobertura
 
